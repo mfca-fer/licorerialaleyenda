@@ -1,0 +1,36 @@
+# =============================================
+# .gitignore — Licorería La Leyenda
+# Solo se suben los archivos esenciales del sitio
+# =============================================
+
+# --- Archivos fuente / diseño (no son parte del sitio web) ---
+*.ai
+*.pdf
+ejemplo_colores.jpg
+Logo_Leyenda.jpg
+
+# --- Logos generados/intermedios (no se usan en producción) ---
+assets/logo_gold.png
+assets/logo_white.png
+assets/logo_original.png
+assets/logo_new_gold.png
+assets/logo_new_white.png
+assets/logo_new_trans.png
+assets/Logo_Leyenda.jpg
+
+# --- Imágenes de categoría pesadas (reemplazar con versiones optimizadas) ---
+# Descomenta si quieres excluirlas temporalmente:
+# assets/images/
+
+# --- Sistema operativo ---
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# --- Editores ---
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# --- Node (por si acaso) ---
+node_modules/

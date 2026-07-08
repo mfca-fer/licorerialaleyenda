@@ -13,26 +13,26 @@ Pagina_LaLeyenda/
 ├── index.html          ← Página principal (toda la estructura del sitio)
 ├── style.css           ← Todos los estilos visuales (colores, animaciones, layout)
 ├── script.js           ← Lógica interactiva (catálogo, filtros, búsqueda, WhatsApp)
+├── productos.csv       ← Matriz de productos, nombres de imágenes y categorías
 │
 ├── assets/             ← 🖼️ CARPETA DE IMÁGENES Y RECURSOS VISUALES
 │   ├── Logo_Leyenda.png        ← Logo principal (PNG transparente — el que se usa)
 │   ├── Logo_Leyenda.jpg        ← Logo en JPG (versión antigua, no se usa)
-│   ├── logo_gold.png           ← Logo dorado generado (versión anterior)
-│   ├── logo_white.png          ← Logo blanco generado (versión anterior)
-│   ├── logo_new_gold.png       ← Logo dorado del nuevo logo JPG
-│   ├── logo_new_white.png      ← Logo blanco del nuevo logo JPG
-│   ├── logo_new_trans.png      ← Logo transparente procesado
-│   ├── logo_original.png       ← Logo extraído del PDF original
+│   ├── logo_original.png       ← Logo original extraído
 │   │
-│   ├── aguardiente_category.png    ← Imagen categoría Aguardientes
-│   ├── beer_category.png           ← Imagen categoría Cervezas
-│   ├── gin_category.png            ← Imagen categoría Gin
-│   └── accessories_category.png    ← Imagen categoría Accesorios
+│   ├── images/                 ← 🏷️ FOTOS REALES DE LOS PRODUCTOS DEL CATÁLOGO
+│   │   ├── 593lager600ml.jpg   
+│   │   ├── amstel355ml.jpg     
+│   │   ├── antioquenoazul1lt.webp
+│   │   └── ... (todas las imágenes de licores con nombres normalizados)
+│   │
+│   ├── aguardiente_category.png    ← Imagen categoría Aguardientes (fallback/anterior)
+│   ├── beer_category.png           ← Imagen categoría Cervezas (fallback/anterior)
+│   ├── gin_category.png            ← Imagen categoría Gin (fallback/anterior)
+│   └── accessories_category.png    ← Imagen categoría Accesorios (fallback/anterior)
 │
-├── Logo_Leyenda.png    ← Archivo fuente original del logo (copia en assets/)
-├── Logo_Leyenda.jpg    ← Archivo fuente original en JPG
 ├── ejemplo_colores.jpg ← Imagen de referencia de la paleta de colores
-└── GUIA_PROYECTO.md    ← Este archivo
+└── GUIA_PROYECTO.md    ← Este archivo (documentación del proyecto)
 ```
 
 ---
@@ -46,41 +46,42 @@ El sitio tiene **una sola página** con las siguientes secciones en orden:
 | Sección | ID / Ancla | Descripción |
 |---|---|---|
 | Header / Nav | `#header` | Barra fija con logo + nombre + botón WhatsApp |
-| Hero | `#inicio` | Pantalla principal con animación, eslogan y logo |
+| Hero | `#inicio` | Pantalla principal con animación, eslogan, logo y botón de WhatsApp flotante |
 | Features Bar | — | 3 íconos: Legales · Delivery · Tradición |
-| Catálogo | `#catalogo` | Grilla de productos con filtros y búsqueda |
-| Nosotros | `#nosotros` | Historia, misión y visión de la licorería |
-| Contacto | `#contacto` | Dirección, teléfono, horarios y mapa |
-| Footer | — | Logo, redes sociales, WhatsApp delivery |
+| Catálogo | `#catalogo` | Grilla de productos con filtros, búsqueda y "Consulta Directa" para categorías vacías |
+| Nosotros | `#nosotros` | Historia, misión y visión de la licorería en tarjetas oscuras interactivas |
+| Contacto | `#contacto` | Dirección, teléfono, horarios, horarios de atención y mapa interactivo real |
+| Footer | — | Logo, redes sociales y WhatsApp delivery en tono oscuro premium |
 
 ### 2. Paleta de Colores (`style.css`)
 
-Toda la paleta está definida en variables CSS al inicio del archivo:
+Toda la paleta de colores oscuros premium y tarjetas claras está definida en variables CSS al inicio del archivo:
 
 ```css
 :root {
-    --accent-gold: #cfb53b;       /* Oro envejecido — color principal */
-    --bg-black: #050505;          /* Fondo más oscuro */
-    --bg-dark: #0c0c0c;           /* Fondo oscuro secundario */
-    --bg-card: #141414;           /* Fondo de tarjetas */
-    --text-cream: #f5f0e0;        /* Texto claro cálido */
-    --text-muted: #a3a3a3;        /* Texto secundario gris */
+    --bg-black: #0D0D0D;             /* Fondo principal negro carbón */
+    --bg-dark: #1A1A1A;              /* Fondo de secciones secundarias/alternas */
+    --bg-card: #FAF8F2;              /* Fondo de tarjetas de producto (blanco cálido) */
+    
+    --accent-gold: #D4AF37;          /* Oro clásico metálico */
+    --accent-gold-hover: #F4E5A1;    /* Oro claro para hover */
+    
+    --text-cream: #F5F0E6;           /* Texto claro cálido sobre fondo negro */
+    --text-muted: #B8B0A0;           /* Texto secundario grisáceo/dorado */
+    --text-dark: #0D0D0D;            /* Texto oscuro para usar sobre tarjetas blancas */
 }
 ```
 
-> Si quieres cambiar el tono dorado, solo modifica `--accent-gold` y se actualiza en todo el sitio.
-
 ### 3. Catálogo de Productos (`script.js`)
 
-El catálogo **no usa base de datos**. Los productos están definidos como un array JSON dentro de `script.js`. Cada producto tiene esta estructura:
+Los productos activos en la página se mapean automáticamente a través del array `PRODUCTS` en `script.js` con esta estructura:
 
 ```javascript
 {
-    name: "Zhumir Tradicional 750ml",
+    name: "Antioqueño Azul 1 Lt.",
     category: "aguardientes",
-    image: "assets/aguardiente_category.png",
-    badge: "Nacional",
-    description: "El aguardiente más popular del Ecuador."
+    presentation: "Botella 1 Litro",
+    img: "assets/images/antioquenoazul1lt.webp"
 }
 ```
 
@@ -88,145 +89,34 @@ Al hacer clic en cualquier producto, el usuario es enviado directamente a **What
 
 ---
 
-## ✅ Cambios Realizados (Historial)
+## ✅ Cambios Realizados (Julio 2026)
 
-### 🖼️ Logo
-- Se reemplazó el logo antiguo por `Logo_Leyenda.png` (PNG con fondo transparente RGBA)
-- El logo aparece en: header, menú móvil, hero, sección Nosotros y footer
-- Se añadió **efecto de luz dorada** en el contorno usando `drop-shadow` multicapa en CSS
-- En el hero hay **2 anillos pulsantes** que giran alrededor del logo grande
+### 🏷️ Catálogo Depurado e Imágenes Reales
+- Se filtraron y eliminaron del catálogo todos los productos que no estaban en la lista final de `productos.csv`, reduciendo los ítems de 104 a **78 productos activos**.
+- Se vincularon todas las botellas con sus **fotos reales** renombradas en `assets/images/`, detectando automáticamente las extensiones correctas (`.jpg`, `.png`, `.webp`).
+- Se rediseñó el contenedor de imagen de las tarjetas con `object-fit: contain;` y `padding: 12px;` para que las botellas se vean completas (sin recortar) y todas las tarjetas conserven exactamente el **mismo tamaño (porte)**.
 
-### 🏷️ Header (Barra de Navegación)
-- Diseño: logo + texto de marca lado a lado
-  - Arriba: `LICORERÍA` (letras pequeñas con separación)
-  - Abajo: `La Leyenda` (letras grandes con gradiente dorado metálico)
-- En móvil el texto se oculta automáticamente para ahorrar espacio
+### 🎨 Rediseño a Tema Oscuro Premium (Carbon & Gold)
+- El fondo general del sitio se definió en negro carbón (`#0D0D0D` / `#1A1A1A`).
+- Las **tarjetas de producto** usan un fondo blanco cálido (`#FAF8F2`) con bordes dorados, de modo que "sobresalen" y toman protagonismo frente al fondo oscuro del sitio. Los textos dentro de las tarjetas se fijaron en negro completo para mantener un contraste de accesibilidad óptimo.
+- Al pasar el cursor por encima de una tarjeta de producto, esta se eleva (`translateY(-6px) scale(1.02)`) con una sombra dorada resplandeciente (`0 8px 24px rgba(212,175,55,0.35)`) y la imagen de la botella se amplía un 5%.
 
-### 🛵 Animación de Delivery (Hero)
-- Moto dibujada en SVG con oro envejecido: ruedas, chasis, faro, jinete
-- Carretera animada con líneas punteadas que se desplazan
-- Humo animado del escape con 3 capas:
-  - `0983417971` — número de WhatsApp
-  - `WhatsApp`
-  - 📞 ícono de teléfono
+### 💬 Botón WhatsApp Integrado
+- Se añadió un **botón flotante de WhatsApp** en la parte inferior izquierda con un diseño verde oficial, borde dorado de 2px y una animación de pulso continuo para captar la atención de los clientes.
+- Los botones de WhatsApp dentro de cada tarjeta de producto ahora cuentan con un borde dorado de 2px, y aumentan de tamaño (`scale(1.1)`) con sombras combinadas al pasar el cursor.
 
-### 💬 Eslogan
-- Texto añadido entre el subtítulo y la animación:
-  > *"No salgas, pide licores, snacks, elige tu combo y sigue disfrutando..."*
-- Estilo: borde dorado izquierdo, fondo semitransparente, itálica
-
-### 🎨 Color Oro
-- Cambiado de oro brillante `#f8c800` → oro envejecido `#cfb53b`
-- Más sofisticado, menos estridente, armonioso con el tema oscuro
-
-### 📍 Google Maps
-- Link actualizado al enlace real del negocio:
-  `https://maps.app.goo.gl/yxBQFsiEpQfAYNg57`
+### 📍 Google Maps Interactivo
+- Se eliminó el marcador estático del mapa y se reemplazó por un **mapa interactivo de Google Maps** integrado por `iframe`.
+- Para mantener la estética oscura, el mapa tiene aplicados filtros CSS (`invert` y `grayscale`), integrándose estéticamente con el diseño del sitio sin molestar la vista.
 
 ---
 
-## 🖼️ Cómo subir imágenes personalizadas
+## 🔧 Cómo agregar o editar productos
 
-### Paso 1 — Prepara la imagen
-
-| Tipo de imagen | Formato recomendado | Tamaño recomendado |
-|---|---|---|
-| Logo / Marca | `.png` con fondo transparente | máx. 500KB |
-| Foto de producto | `.jpg` o `.webp` | 400×400px, máx. 200KB |
-| Imagen de fondo | `.jpg` o `.webp` | 1920×1080px, máx. 500KB |
-| Icono / Badge | `.svg` o `.png` | máx. 50KB |
-
-> **Tip:** Para el logo siempre usa PNG con fondo transparente. Evita JPG para logos.
-
-### Paso 2 — Guarda la imagen en la carpeta correcta
-
-**👉 Todas las imágenes van en la carpeta `assets/`**
-
-```
-d:\Proyectos\Pagina_LaLeyenda\assets\
-```
-
-Ejemplo: si quieres añadir la foto de una botella de whisky:
-```
-assets/whisky_johnnie_red.jpg
-```
-
-### Paso 3 — Referenciarla en el código
-
-**En `index.html`** (para imágenes en el HTML):
-```html
-<img src="assets/whisky_johnnie_red.jpg" alt="Johnnie Walker Red Label">
-```
-
-**En `script.js`** (para imágenes de productos en el catálogo):
-```javascript
-{
-    name: "Johnnie Walker Red Label 750ml",
-    category: "whiscky",
-    image: "assets/whisky_johnnie_red.jpg",   // ← aquí
-    badge: "Importado",
-    description: "El whisky escocés más vendido del mundo."
-}
-```
-
-**En `style.css`** (para imágenes de fondo):
-```css
-.mi-seccion {
-    background-image: url('assets/mi_fondo.jpg');
-}
-```
-
----
-
-## 📲 Datos de Contacto Configurados
-
-| Campo | Valor |
-|---|---|
-| Teléfono | `0983417971` |
-| WhatsApp | `+593 98 341 7971` |
-| Dirección | Av. Fray Vicente Solano 1-80 y Daniel Córdova Toral, Cuenca |
-| Google Maps | https://maps.app.goo.gl/yxBQFsiEpQfAYNg57 |
-| Facebook | https://www.facebook.com/share/1Di4Pgr4Qk/ |
-| Instagram | https://www.instagram.com/leyendalicoreriala |
-| TikTok | https://www.tiktok.com/@licorera.la.leyen |
-
-> Para actualizar el número de WhatsApp, busca `593983417971` en `index.html` y reemplázalo en todos los lugares donde aparezca.
-
----
-
-## 🔧 Cómo agregar un nuevo producto al catálogo
-
-Abre `script.js` y localiza el array `products`. Añade un objeto nuevo:
-
-```javascript
-{
-    name: "Nombre del Producto",
-    category: "ron",              // debe coincidir con un filtro existente
-    image: "assets/mi_imagen.jpg",
-    badge: "Importado",           // o "Nacional", "Nuevo", "Oferta", etc.
-    description: "Descripción corta del producto."
-}
-```
-
-**Categorías disponibles:**
-`aguardientes` · `cervezas` · `gin` · `ron` · `tequila` · `vodka` · `whiscky` · `vino` · `espumantes` · `hierbas` · `saborizados` · `accesorios` · `varios`
-
----
-
-## 🚀 Cómo ver el sitio localmente
-
-El servidor local ya está corriendo. Para verlo en el navegador:
-
-```
-http://localhost:8000
-```
-
-Si necesitas reiniciarlo:
-```powershell
-cd d:\Proyectos\Pagina_LaLeyenda
-python -m http.server 8000
-```
-
+1. Abre el archivo [productos.csv](file:///d:/Proyectos/Pagina_LaLeyenda/productos.csv) en Excel.
+2. Agrega la información del producto respetando las columnas: `Producto;Nombre_Imagen;Categoria;Presentacion`.
+3. Guarda tu imagen del licor en `assets/images/` y renómbrala tal como colocaste en la columna `Nombre_Imagen` (ej. `miproducto.jpg`).
+4. Avisa al asistente para ejecutar el actualizador del catálogo. El script actualizará automáticamente el catálogo de `script.js` con las nuevas rutas y extensiones de imágenes.
 
 ---
 
@@ -241,41 +131,23 @@ El sitio está publicado y disponible públicamente usando **GitHub + GitHub Pag
 | **Sitio web público** | https://mfca-fer.github.io/licorerialaleyenda/ |
 | **Repositorio GitHub** | https://github.com/mfca-fer/licorerialaleyenda |
 
-> El sitio web puede compartirse directamente con clientes, enviarse por WhatsApp o ponerse en tarjetas de presentación.
-
 ---
 
 ### 📦 ¿Qué se subió a GitHub?
 
-Solo los archivos **estrictamente necesarios** para que el sitio funcione:
-
-| Archivo / Carpeta | Descripción |
-|---|---|
-| `index.html` | Estructura completa del sitio |
-| `style.css` | Todos los estilos y animaciones |
-| `script.js` | Catálogo, filtros y links a WhatsApp |
-| `assets/Logo_Leyenda.png` | Logo con fondo transparente |
-| `assets/images/*.png` | Imágenes de categorías del catálogo |
-| `GUIA_PROYECTO.md` | Esta guía de documentación |
-| `.gitignore` | Reglas para excluir archivos innecesarios |
-
-### ❌ Lo que **NO** se subió (excluido por `.gitignore`)
-
-| Archivo | Razón |
-|---|---|
-| `CATÁLOGO LICORERIA LA LEYENDA.pdf` | 116 MB — demasiado pesado, solo es fuente de referencia |
-| `LOGO LA LEYENDA out.ai` | 1.9 MB — archivo de diseño de Illustrator, no es parte del sitio |
-| `ejemplo_colores.jpg` | Solo fue referencia de paleta de colores durante el diseño |
-| `Logo_Leyenda.jpg` | Reemplazado por la versión PNG transparente |
-| `assets/logo_gold.png`, `logo_white.png`, etc. | Logos intermedios generados, no se usan en producción |
+- `index.html` (Estructura completa del sitio)
+- `style.css` (Todos los estilos, animaciones y tema oscuro)
+- `script.js` (Catálogo activo de 78 productos y buscador)
+- `productos.csv` (Matriz de productos de referencia)
+- `assets/logo_original.png` y `assets/Logo_Leyenda.png` (Logos del negocio)
+- `assets/images/*` (Todas las 76 imágenes reales de los licores cargadas)
+- `GUIA_PROYECTO.md` (Esta guía de documentación)
 
 ---
 
 ### 🔄 Cómo actualizar el sitio en el futuro
 
-Cada vez que hagas un cambio en los archivos (HTML, CSS, JS o imágenes), debes subir esos cambios a GitHub para que el sitio público se actualice.
-
-**Pasos para actualizar:**
+Cada vez que hagas un cambio en los archivos locales, ejecuta los siguientes comandos en tu terminal de PowerShell:
 
 ```powershell
 # 1. Ir a la carpeta del proyecto
@@ -285,32 +157,14 @@ cd d:\Proyectos\Pagina_LaLeyenda
 git add .
 
 # 3. Guardar los cambios con una descripción
-git commit -m "descripción breve del cambio"
+git commit -m "Descripción breve del cambio realizado"
 
 # 4. Subir a GitHub
 git push
 ```
 
-> Después del `git push`, GitHub Pages actualiza el sitio automáticamente en aproximadamente **1 minuto**.
-
-**Ejemplos de mensajes de commit:**
-
-```powershell
-git commit -m "Agregar nuevos productos al catálogo"
-git commit -m "Actualizar horario de atención"
-git commit -m "Cambiar número de WhatsApp"
-git commit -m "Agregar imagen de producto whisky"
-```
+> Los cambios tardarán aproximadamente **1 minuto** en verse reflejados en el sitio web público.
 
 ---
 
-### 🖼️ Cómo subir una imagen nueva y que aparezca en el sitio público
-
-1. Guarda la imagen en `assets/` (o `assets/images/` para productos)
-2. Referénciala en el código (`script.js` o `index.html`)
-3. Ejecuta los comandos de actualización de arriba (`git add`, `commit`, `push`)
-4. En ~1 minuto la imagen ya estará visible en el sitio público
-
----
-
-*Guía generada el 18 de junio de 2026 · Licorería La Leyenda · Cuenca, Ecuador*
+*Guía actualizada en julio de 2026 · Licorería La Leyenda · Cuenca, Ecuador*

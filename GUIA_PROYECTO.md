@@ -227,6 +227,90 @@ cd d:\Proyectos\Pagina_LaLeyenda
 python -m http.server 8000
 ```
 
+
+---
+
+## 🌐 GitHub y Publicación en Línea
+
+El sitio está publicado y disponible públicamente usando **GitHub + GitHub Pages**.
+
+### 🔗 Enlaces del proyecto
+
+| Recurso | URL |
+|---|---|
+| **Sitio web público** | https://mfca-fer.github.io/licorerialaleyenda/ |
+| **Repositorio GitHub** | https://github.com/mfca-fer/licorerialaleyenda |
+
+> El sitio web puede compartirse directamente con clientes, enviarse por WhatsApp o ponerse en tarjetas de presentación.
+
+---
+
+### 📦 ¿Qué se subió a GitHub?
+
+Solo los archivos **estrictamente necesarios** para que el sitio funcione:
+
+| Archivo / Carpeta | Descripción |
+|---|---|
+| `index.html` | Estructura completa del sitio |
+| `style.css` | Todos los estilos y animaciones |
+| `script.js` | Catálogo, filtros y links a WhatsApp |
+| `assets/Logo_Leyenda.png` | Logo con fondo transparente |
+| `assets/images/*.png` | Imágenes de categorías del catálogo |
+| `GUIA_PROYECTO.md` | Esta guía de documentación |
+| `.gitignore` | Reglas para excluir archivos innecesarios |
+
+### ❌ Lo que **NO** se subió (excluido por `.gitignore`)
+
+| Archivo | Razón |
+|---|---|
+| `CATÁLOGO LICORERIA LA LEYENDA.pdf` | 116 MB — demasiado pesado, solo es fuente de referencia |
+| `LOGO LA LEYENDA out.ai` | 1.9 MB — archivo de diseño de Illustrator, no es parte del sitio |
+| `ejemplo_colores.jpg` | Solo fue referencia de paleta de colores durante el diseño |
+| `Logo_Leyenda.jpg` | Reemplazado por la versión PNG transparente |
+| `assets/logo_gold.png`, `logo_white.png`, etc. | Logos intermedios generados, no se usan en producción |
+
+---
+
+### 🔄 Cómo actualizar el sitio en el futuro
+
+Cada vez que hagas un cambio en los archivos (HTML, CSS, JS o imágenes), debes subir esos cambios a GitHub para que el sitio público se actualice.
+
+**Pasos para actualizar:**
+
+```powershell
+# 1. Ir a la carpeta del proyecto
+cd d:\Proyectos\Pagina_LaLeyenda
+
+# 2. Agregar todos los cambios
+git add .
+
+# 3. Guardar los cambios con una descripción
+git commit -m "descripción breve del cambio"
+
+# 4. Subir a GitHub
+git push
+```
+
+> Después del `git push`, GitHub Pages actualiza el sitio automáticamente en aproximadamente **1 minuto**.
+
+**Ejemplos de mensajes de commit:**
+
+```powershell
+git commit -m "Agregar nuevos productos al catálogo"
+git commit -m "Actualizar horario de atención"
+git commit -m "Cambiar número de WhatsApp"
+git commit -m "Agregar imagen de producto whisky"
+```
+
+---
+
+### 🖼️ Cómo subir una imagen nueva y que aparezca en el sitio público
+
+1. Guarda la imagen en `assets/` (o `assets/images/` para productos)
+2. Referénciala en el código (`script.js` o `index.html`)
+3. Ejecuta los comandos de actualización de arriba (`git add`, `commit`, `push`)
+4. En ~1 minuto la imagen ya estará visible en el sitio público
+
 ---
 
 *Guía generada el 18 de junio de 2026 · Licorería La Leyenda · Cuenca, Ecuador*

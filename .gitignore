@@ -34,3 +34,6 @@ desktop.ini
 
 # --- Node (por si acaso) ---
 node_modules/
+
+# --- Documentación Privada ---
+GUIA_PROYECTO.md

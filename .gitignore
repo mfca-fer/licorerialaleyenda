@@ -8,6 +8,7 @@
 *.pdf
 ejemplo_colores.jpg
 Logo_Leyenda.jpg
+assets/Delivery.png
 
 # --- Logos generados/intermedios (no se usan en producción) ---
 assets/logo_gold.png
